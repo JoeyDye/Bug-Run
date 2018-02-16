@@ -29,12 +29,10 @@ class Enemy {
   // Check enemy player collisions
 
   checkCollisions() {
-    if (this.y !== player.y) {
-      if (this.x === player.x) {
-        player.resetPlayer();
-        }
-      }
+    if (this.x > (player.x - 60) && this.x < player.x + 101 && this.y >= player.y && this.y < player.y + 171) {
+    player.resetPlayer();
     }
+  }
 
     // If enemy off screen reset position
 
@@ -54,6 +52,7 @@ class Player {
     this.y = 420;
     this.speed = 20;
     this.sprite = "images/char-boy.png";
+    this.score = 0;
   }
 
   update(dt) {
@@ -71,8 +70,21 @@ class Player {
     this.y = 420;
   }
 
+  updateScore() {
+    // const p = document.getElementById('score');
+
+    this.score += 1;
+    // p.innerHTML = `Score = ${this.score}`;
+    // ctx.font = '24px serif';
+    // ctx.fillStyle = 'white';
+    // ctx.fillText(score = ${this.score}, 50, 50);
+  }
+
   handleInput(keycode) {
-    if (this.y < 5) this.resetPlayer();
+    if (this.y < 5) {
+      this.updateScore();
+      this.resetPlayer();
+    }
     this.update();
 
     switch (keycode) {
@@ -115,7 +127,7 @@ allEnemies.forEach(function(enemy) {
     enemy.update();
     enemy.reset();
     enemy.x += enemy.speed;
-    }, 75);
+    }, 100);
 });
 
 // This listens for key presses and sends the keys to your
