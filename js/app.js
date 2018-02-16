@@ -29,16 +29,17 @@ class Enemy {
   // Check enemy player collisions
 
   checkCollisions() {
-    if (this.x > (player.x - 60) && this.x < player.x + 101 && this.y >= player.y && this.y < player.y + 171) {
-    player.resetPlayer();
-    }
-  }
+    if (this.x > (player.x - 60) && this.x < player.x + 101 && this.y >= player.y && this.y < player.y + 101) {
+    player.resetPlayer(); // Reset player to start position
+    player.updateLives(); // Remove 1 life from lives total
+     }
+   }
 
     // If enemy off screen reset position
 
     reset() {
       if (this.x > 515) {
-        this.x = -200;} 
+        this.x = -200;}
     }
 }
 
@@ -53,6 +54,7 @@ class Player {
     this.speed = 20;
     this.sprite = "images/char-boy.png";
     this.score = 0;
+    this.lives = 3;
   }
 
   update(dt) {
@@ -71,17 +73,23 @@ class Player {
   }
 
   updateScore() {
-    // const p = document.getElementById('score');
-
+    const scoreCount = document.getElementById('score-count');
     this.score += 1;
-    // p.innerHTML = `Score = ${this.score}`;
-    // ctx.font = '24px serif';
-    // ctx.fillStyle = 'white';
-    // ctx.fillText(score = ${this.score}, 50, 50);
+    scoreCount.innerHTML = `Score: ${this.score}`;
+  }
+
+  updateLives() {
+    const lifeCount = document.getElementById('life-count');
+
+    // If all lives used, game resets
+    if (player.lives > 0) {
+      player.lives -= 1;
+    } else { player.reset() }
+    lifeCount.innerHTML = `Lives: ${player.lives}`;
   }
 
   handleInput(keycode) {
-    if (this.y < 5) {
+    if (this.y <= 5) {
       this.updateScore();
       this.resetPlayer();
     }
@@ -127,7 +135,7 @@ allEnemies.forEach(function(enemy) {
     enemy.update();
     enemy.reset();
     enemy.x += enemy.speed;
-    }, 100);
+    }, 200);
 });
 
 // This listens for key presses and sends the keys to your
