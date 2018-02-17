@@ -1,3 +1,47 @@
 body {
+    margin: 0 auto;
     text-align: center;
+    line-height: 1.6
+}
+
+/*
+ * Modal Styles
+ */
+
+.modal {
+  padding: 10px;
+  background: linear-gradient(to right, #1bbbb1, #36b8e9);
+}
+
+.modal-sub {
+  margin-bottom: 0;
+}
+
+.modal-title {
+  font-size: 26px;
+  margin-top: 25px;
+}
+
+.modal-img:hover {
+  cursor: pointer;
+}
+
+/*
+ * Score Styles
+ */
+
+.score {
+  position: fixed;
+  top: 15px;
+  left: 590px;
+
+}
+
+#score-count,
+#life-count {
+  display: inline-block;
+}
+
+#score-count {
+  padding-right: 10px;
 }

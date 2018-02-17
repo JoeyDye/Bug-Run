@@ -1,3 +1,8 @@
+$('#myModal').modal('show')
+
+
+
+
 // Enemies our player must avoid
 class Enemy {
   constructor(x, y) {
@@ -52,7 +57,7 @@ class Player {
     this.x = 200;
     this.y = 420;
     this.speed = 20;
-    this.sprite = "images/char-boy.png";
+    this.sprite;
     this.score = 0;
     this.lives = 3;
   }
@@ -114,6 +119,28 @@ class Player {
       }
     }
   }
+
+  // Select player
+
+  const selectGirl = document.querySelector('#girl');
+  const selectBoy = document.querySelector('#boy');
+
+  let sprite;
+
+  const setPlayerGirl = sprite => {
+      player.sprite = 'images/char-cat-girl.png';
+      $('#myModal').modal('hide');
+      Engine(this);
+    }
+
+  const setPlayerBoy = sprite => {
+      player.sprite = 'images/char-boy.png';
+      $('#myModal').modal('hide');
+      Engine(this);
+    }
+
+  selectGirl.addEventListener('click', setPlayerGirl);
+  selectBoy.addEventListener('click', setPlayerBoy);
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
