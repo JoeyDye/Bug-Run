@@ -24,9 +24,9 @@ class Enemy {
   // Check for enemy player collisions and restart player on collision
   checkCollisions() {
     if (this.x > (player.x - 65) && this.x < player.x + 80 && this.y >= (player.y - 70) && this.y < player.y + 65) {
-    player.resetPlayer();
-     }
-   }
+      player.resetPlayer();
+    }
+  }
 
   // If enemy off screen reset position
   reset() {
@@ -35,18 +35,18 @@ class Enemy {
   }
 
   // Move enemy across screen
-  moveEnemy(enemy) {
+  moveEnemy(char) {
     const enemyInterval = setInterval(() => {
       // Stop enemies on game win
       if (player.winGame === true) {
         clearInterval(enemyInterval);
       }
-      enemy.checkCollisions();
-      enemy.update();
+      char.checkCollisions();
+      char.update();
       // Reset enemy if it reaches end of screen
-      enemy.reset(); 
-      enemy.x += enemy.speed;
-      }, 75)};
+      char.reset();
+      char.x += char.speed;
+    }, 75)}
 } // End of Enemy class
 
 class Player {
@@ -79,20 +79,20 @@ class Player {
   win() {
     this.winGame = true;
     const winMessage = document.querySelector('.win-message'); // Display win message
-    winMessage.innerHTML = 'You Win!!!'
+    winMessage.innerHTML = 'You Win!!!';
     // Move star off screen
     star.y = -200;
 
     // Resent game after 3 seconds
     setTimeout(
       () => {
-        this.resetPlayer()
+        this.resetPlayer();
         startEnemies();
         winMessage.innerHTML = '';
         star.y = -5;
         this.winGame = false;
-      }, 3000)
-    }
+      }, 3000);
+  }
 
   // Enable player movement on keypress
   handleInput(keycode) {
@@ -107,55 +107,53 @@ class Player {
 
     // Check keycode. Move player the correct direction. Stop movement if player reaches edge of screen.
     switch (keycode) {
-      case 'up':
-        if (this.y > -10) {
+    case 'up':
+      if (this.y > -10) {
         this.y -= this.speed;}
-        break;
-      case 'down':
-        if (this.y < canvas.height - 170) {
+      break;
+    case 'down':
+      if (this.y < canvas.height - 170) {
         this.y += this.speed;}
-        break;
-      case 'right':
-        if (this.x < canvas.width - 100) {
+      break;
+    case 'right':
+      if (this.x < canvas.width - 100) {
         this.x += this.speed; }
-        break;
-      case 'left':
-        if (this.x > -10) {
+      break;
+    case 'left':
+      if (this.x > -10) {
         this.x -= this.speed;}
-      }
     }
-  } // End of Player class
+  }
+} // End of Player class
 
-  class Star {
-    constructor() {
-      this.x = 205;
-      this.y = -5;
-      this.sprite = 'images/star.png';
-    }
+class Star {
+  constructor() {
+    this.x = 205;
+    this.y = -5;
+    this.sprite = 'images/star.png';
+  }
 
-    // Load star on screen
-    render() {
-      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    }
-  } // End of Star class
+  // Load star on screen
+  render() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+} // End of Star class
 
 // Add event listener to listen for player selection. Start game once player selected.
 const selectGirl = document.querySelector('#girl');
 const selectBoy = document.querySelector('#boy');
 
-let sprite;
-
 const setPlayerGirl = sprite => {
-    player.sprite = 'images/char-cat-girl.png';
-    $('#myModal').modal('hide');
-    Engine(this);
-  }
+  player.sprite = 'images/char-cat-girl.png';
+  $('#myModal').modal('hide');
+  Engine(window);
+}
 
 const setPlayerBoy = sprite => {
-    player.sprite = 'images/char-boy.png';
-    $('#myModal').modal('hide');
-    Engine(this);
-  }
+  player.sprite = 'images/char-boy.png';
+  $('#myModal').modal('hide');
+  Engine(window);
+}
 
 selectGirl.addEventListener('click', setPlayerGirl);
 selectBoy.addEventListener('click', setPlayerBoy);
@@ -173,19 +171,19 @@ const allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
 // Move enemies at varying speed accross screen
 const startEnemies = () => {
-  for (enemy of allEnemies) {
-    enemy.moveEnemy(enemy);
-  };
-}
+  for (let char of allEnemies) {
+    char.moveEnemy(char);
+  }
+};
 startEnemies();
 
 // Listen for key presses and send the keys to Player.handleInput() method
 document.addEventListener("keyup", function(e) {
   var allowedKeys = {
-    37: "left",
-    38: "up",
-    39: "right",
-    40: "down"
+    37: 'left',
+    38: 'up',
+    39: 'right',
+    40: 'down'
   };
 
   player.handleInput(allowedKeys[e.keyCode]);
