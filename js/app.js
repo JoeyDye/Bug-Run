@@ -1,7 +1,5 @@
+// Open modal on load
 $('#myModal').modal('show')
-
-
-
 
 // Enemies our player must avoid
 class Enemy {
@@ -14,7 +12,7 @@ class Enemy {
     this.x = x; // added for start x position
     this.y = y; // added for start y position
     this.speed = Math.floor(Math.random() * (15 - 10) + 10);
-    this.sprite = "images/enemy-bug.png";
+    this.sprite = 'images/enemy-bug.png';
   }
 
   // Update the enemy's position, required method for game
@@ -34,9 +32,8 @@ class Enemy {
   // Check enemy player collisions
 
   checkCollisions() {
-    if (this.x > (player.x - 60) && this.x < player.x + 101 && this.y >= player.y && this.y < player.y + 101) {
+    if (this.x > (player.x - 65) && this.x < player.x + 80 && this.y >= (player.y - 70) && this.y < player.y + 65) {
     player.resetPlayer(); // Reset player to start position
-    player.updateLives(); // Remove 1 life from lives total
      }
    }
 
@@ -46,7 +43,18 @@ class Enemy {
       if (this.x > 515) {
         this.x = -200;}
     }
-}
+
+    moveEnemy(enemy) {
+      const enemyInterval = setInterval(() => {
+        if (player.winGame === true) {
+          clearInterval(enemyInterval);
+        }
+        enemy.checkCollisions();
+        enemy.update();
+        enemy.reset();
+        enemy.x += enemy.speed;
+        }, 300)};
+} // End of Enemy class
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -55,11 +63,10 @@ class Enemy {
 class Player {
   constructor() {
     this.x = 200;
-    this.y = 420;
+    this.y = 380;
     this.speed = 20;
     this.sprite;
-    this.score = 0;
-    this.lives = 3;
+    this.winGame = false;
   }
 
   update(dt) {
@@ -77,26 +84,27 @@ class Player {
     this.y = 420;
   }
 
-  updateScore() {
-    const scoreCount = document.getElementById('score-count');
-    this.score += 1;
-    scoreCount.innerHTML = `Score: ${this.score}`;
-  }
+  win() {
+    const winMessage = document.querySelector('.win-message');
+    winMessage.innerHTML = 'You Win!!!'
+    star.y = -200;
+    this.winGame = true;
 
-  updateLives() {
-    const lifeCount = document.getElementById('life-count');
-
-    // If all lives used, game resets
-    if (player.lives > 0) {
-      player.lives -= 1;
-    } else { player.reset() }
-    lifeCount.innerHTML = `Lives: ${player.lives}`;
-  }
+    setTimeout(
+      () => {
+        this.resetPlayer()
+        startEnemies();
+        winMessage.innerHTML = '';
+        star.y = -5;
+        this.winGame = false;
+      }, 3000)
+    }
 
   handleInput(keycode) {
-    if (this.y <= 5) {
-      this.updateScore();
-      this.resetPlayer();
+    if (player.winGame === true) return;
+
+    if (this.x > (star.x - 70) && this.x < star.x + 60 && this.y >= (star.y - 50) && this.y < star.y + 50) {
+      this.win();
     }
     this.update();
 
@@ -118,10 +126,21 @@ class Player {
         this.x -= this.speed;}
       }
     }
+  } // End of Player class
+
+  class Star {
+    constructor() {
+      this.x = 205;
+      this.y = -5;
+      this.sprite = 'images/star.png';
+    }
+
+    render() {
+      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
   }
 
   // Select player
-
   const selectGirl = document.querySelector('#girl');
   const selectBoy = document.querySelector('#boy');
 
@@ -146,6 +165,7 @@ class Player {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 const player = new Player();
+const star = new Star();
 const enemy1 = new Enemy(-10, 60);
 const enemy2 = new Enemy(-10, 140);
 const enemy3 = new Enemy(-10, 220);
@@ -156,14 +176,13 @@ const allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
 // Move enemies at varying speed accross screen
 
-allEnemies.forEach(function(enemy) {
-  setInterval(() => {
-    enemy.checkCollisions();
-    enemy.update();
-    enemy.reset();
-    enemy.x += enemy.speed;
-    }, 200);
-});
+const startEnemies = () => {
+  for (enemy of allEnemies) {
+    enemy.moveEnemy(enemy);
+  };
+}
+
+startEnemies();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

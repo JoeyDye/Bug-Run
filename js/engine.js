@@ -153,6 +153,7 @@ var Engine = (function(global) {
         });
 
         player.render();
+        star.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -160,7 +161,6 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -173,7 +173,8 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/char-cat-girl.png'
+        'images/char-cat-girl.png',
+        'images/star.png'
     ]);
     Resources.onReady(init);
 

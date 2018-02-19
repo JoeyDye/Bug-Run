@@ -1,6 +1,12 @@
-frontend-nanodegree-arcade-game
-===============================
+# Bug Run
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## Getting Started
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+To get started with Bug Run, simply visit the following URL:
+
+You can also clone the project to your local computer and run the project on your local host.
+
+## Gameplay
+
+Start the game by selecting a player. To play, use the up, down, right, and left arrow keys to move the player across the screen. Your goal is to aquire points by getting your player to reach the river without being hit by and enemy. Your player starts out with 3 lives. For each time the player collides with an enemy bug, a life is removed. When all three lives are gone, the game restarts. See how many points you can get before all your lives run out.
+
