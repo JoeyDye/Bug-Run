@@ -20,7 +20,7 @@ class Enemy {
     this.x = x;
     this.y = y;
     // Gives each enemy a random speed
-    this.speed = Math.floor(Math.random() * (15 - 10) + 10);
+    this.speed = Math.floor(Math.random() * (20 - 10) + 10);
     this.sprite = 'images/enemy-bug.png';
   }
 
@@ -63,7 +63,7 @@ class Enemy {
       char.update();
       char.reset();
       char.x += char.speed;
-    }, 75);}
+    }, 100);}
 } // End of Enemy class
 
 /**
@@ -77,7 +77,7 @@ class Player {
   constructor() {
     this.x = 200;
     this.y = 380;
-    this.speed = 30;
+    this.speed = 35;
     this.sprite;
     this.winGame = false;
   }

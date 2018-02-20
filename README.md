@@ -2,13 +2,7 @@
 
 ## Getting Started
 
-### Quick Start
-
-Play the game now here: [Bug Run](http://joeydye.github.io/bug-run)
-
-### Play Locally
-
-You can also clone the project to your local computer and run it on your local host. Either way works!
+To get started, clone the project to your local computer and run it on your local host.
 
 ## Gameplay
 
