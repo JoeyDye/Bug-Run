@@ -134,11 +134,11 @@ class Player {
 
     switch (keycode) {
     case 'up':
-      if (this.y > -5) {
+      if (this.y > -40) {
         this.y -= this.speed;}
       break;
     case 'down':
-      if (this.y < canvas.height - 175) {
+      if (this.y < canvas.height - 225) {
         this.y += this.speed;}
       break;
     case 'right':
@@ -161,7 +161,7 @@ class Player {
 class Star {
   constructor() {
     this.x = 205;
-    this.y = -5;
+    this.y = -10;
     this.sprite = 'images/star.png';
   }
 
