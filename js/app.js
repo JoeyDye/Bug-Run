@@ -78,7 +78,7 @@ class Player {
   // Handle game win
   win() {
     this.winGame = true;
-    const winMessage = document.querySelector('.win-message'); // Display win message
+    const winMessage = document.querySelector('.win-text'); // Display win message
     winMessage.innerHTML = 'You Win!!!';
     // Move star off screen
     star.y = -200;
