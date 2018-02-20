@@ -108,11 +108,11 @@ class Player {
     // Check keycode. Move player the correct direction. Stop movement if player reaches edge of screen.
     switch (keycode) {
     case 'up':
-      if (this.y > -10) {
+      if (this.y > -5) {
         this.y -= this.speed;}
       break;
     case 'down':
-      if (this.y < canvas.height - 170) {
+      if (this.y < canvas.height - 175) {
         this.y += this.speed;}
       break;
     case 'right':
