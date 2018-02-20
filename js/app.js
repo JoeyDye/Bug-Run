@@ -95,7 +95,7 @@ class Player {
   /** @description Resets player to start position */
   resetPlayer() {
     this.x = 200;
-    this.y = 420;
+    this.y = 380;
   }
 
   /** @description Handles game win */
