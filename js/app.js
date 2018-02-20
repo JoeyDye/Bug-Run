@@ -1,5 +1,10 @@
 /** @description Opens character select modal on load */
-$('#myModal').modal('show');
+$('#startModal').modal({
+  backdrop: 'static', keyboard: false
+});
+$('#startModal').modal('show');
+
+
 
 /**
  * @constructor
@@ -172,13 +177,13 @@ const selectBoy = document.querySelector('#boy');
 
 const setPlayerGirl = () => {
   player.sprite = 'images/char-cat-girl.png';
-  $('#myModal').modal('hide');
+  $('#startModal').modal('hide');
   Engine(window);
 };
 
 const setPlayerBoy = () => {
   player.sprite = 'images/char-boy.png';
-  $('#myModal').modal('hide');
+  $('#startModal').modal('hide');
   Engine(window);
 };
 
