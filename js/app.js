@@ -1,53 +1,72 @@
-// Open character select modal on load
+/** @description Opens character select modal on load */
 $('#myModal').modal('show');
 
-// Enemies our player must avoid
+/**
+ * @constructor
+ * @description Enemies our player must avoid. Includes properties for x and y coordinates,
+ * speed, and sprite image. Also, includes methods for updating, rendering, checking collisions
+ * reseting, and moving the enemy across the screen. Using a constructor allows for the creation
+ * of mutiple enemy instances.
+ * @param { number } x - x coordinate
+ * @param { number } y - y coordinate
+ */
 class Enemy {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.speed = Math.floor(Math.random() * (15 - 10) + 10); // Give each enemy a random speed
+    // Gives each enemy a random speed
+    this.speed = Math.floor(Math.random() * (15 - 10) + 10);
     this.sprite = 'images/enemy-bug.png';
   }
 
-  // Multiply any movement by the dt parameter to ensure the game runs at the same speed for
-  // all computers.
+  /** @description Multiplies any movement by the dt parameter to ensure the game runs at the same
+   * speed for all computers.
+   * @param { number } dt = delta time
+   */
   update(dt) {
     this.speed * dt;
   }
 
-  // Draw enemy on the screen
+  /** @description Draws enemy on screen */
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
-  // Check for enemy player collisions and restart player on collision
+  /** @description Checks for enemy player collisions and restart player on collision */
   checkCollisions() {
     if (this.x > (player.x - 65) && this.x < player.x + 80 && this.y >= (player.y - 70) && this.y < player.y + 65) {
       player.resetPlayer();
     }
   }
 
-  // If enemy off screen reset position
+  /** @description resets enemy position if goes of screen */
   reset() {
     if (this.x > 515) {
       this.x = -200;}
   }
 
-  // Move enemy across screen
+  /** @description Moves enemy across screen, stops enemies if game has been won, and resets the
+   * enemy if it reaches the screen edge.
+   * @param { string } char - enemy instance
+   */
   moveEnemy(char) {
     const enemyInterval = setInterval(() => {
-      // Stop enemies on game win
       if (player.winGame === true) {
         clearInterval(enemyInterval);
       }
       char.checkCollisions();
       char.update();
-      // Reset enemy if it reaches end of screen
       char.reset();
       char.x += char.speed;
     }, 75);}
 } // End of Enemy class
+
+/**
+ * @constructor
+ * @description Player character who much reach the star. Includes properties such as x coordinate,
+ * y coordinate, player speed, sprite image (based on player selection), and win status.
+ * Includes methods such as update, render, reset, win, and handle input on keypress.
+ */
 
 class Player {
   constructor() {
@@ -58,24 +77,23 @@ class Player {
     this.winGame = false;
   }
 
-  // Multiply any movement by the dt parameter to ensure the game runs at the same speed for
-  // all computers.
+  /** @description Multiplies any movement by the dt parameter to ensure the game runs at the same speed for all computers. */
   update(dt) {
     this.speed * dt;
   }
 
-  // Load player on screen
+  /** @description Loads player on screen */
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
-  // Reset player to start position
+  /** @description Resets player to start position */
   resetPlayer() {
     this.x = 200;
     this.y = 420;
   }
 
-  // Handle game win
+  /** @description Handles game win */
   win() {
     this.winGame = true;
     const winMessage = document.querySelector('.win-text'); // Display win message
@@ -83,7 +101,7 @@ class Player {
     // Move star off screen
     star.y = -200;
 
-    // Resent game after 3 seconds
+    /** @description Resets game after 3 seconds */
     setTimeout(
       () => {
         this.resetPlayer();
@@ -94,18 +112,21 @@ class Player {
       }, 3000);
   }
 
-  // Enable player movement on keypress
+  /** @description Enables player movement on keypress
+   * Stops player if game has been won
+   * Runs win method if player reaches star
+   * Checks keycode, and moves player based on input
+   * Stops player if reaches edge of screen
+   * @param { object } keycode - pressed key
+   */
   handleInput(keycode) {
-    // Stop player if game has been won
     if (player.winGame === true) return;
 
-    // Run win method if player reaches star
     if (this.x > (star.x - 70) && this.x < star.x + 60 && this.y >= (star.y - 50) && this.y < star.y + 50) {
       this.win();
     }
     this.update();
 
-    // Check keycode. Move player the correct direction. Stop movement if player reaches edge of screen.
     switch (keycode) {
     case 'up':
       if (this.y > -5) {
@@ -126,6 +147,12 @@ class Player {
   }
 } // End of Player class
 
+
+/**
+ * @constructor
+ * @description Star the player much reach to win. Properties include x coordinate, y coordinate, and
+ * sprite image. Methods include render.
+ */
 class Star {
   constructor() {
     this.x = 205;
@@ -133,13 +160,13 @@ class Star {
     this.sprite = 'images/star.png';
   }
 
-  // Load star on screen
+  /** @description Loads star on screen */
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 } // End of Star class
 
-// Add event listener to listen for player selection. Start game once player selected.
+/** @description Adds event listener to listen for player selection. Start game once player selected. */
 const selectGirl = document.querySelector('#girl');
 const selectBoy = document.querySelector('#boy');
 
@@ -158,7 +185,7 @@ const setPlayerBoy = () => {
 selectGirl.addEventListener('click', setPlayerGirl);
 selectBoy.addEventListener('click', setPlayerBoy);
 
-// instantiate all enemy, player, and star objects, and place all enemies in array called allEnemies
+/** @description instantiates all enemy, player, and star objects, and place all enemies in array called allEnemies */
 const player = new Player();
 const star = new Star();
 const enemy1 = new Enemy(-10, 60);
@@ -169,7 +196,7 @@ const enemy5 = new Enemy(-500, 140);
 const enemy6 = new Enemy(-500, 220);
 const allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
-// Move enemies at varying speed accross screen
+/** @description Moves enemies at varying speed accross screen */
 const startEnemies = () => {
   for (let char of allEnemies) {
     char.moveEnemy(char);
@@ -177,7 +204,7 @@ const startEnemies = () => {
 };
 startEnemies();
 
-// Listen for key presses and send the keys to Player.handleInput() method
+/** @description Listens for key presses and send the keys to Player.handleInput() method */
 document.addEventListener('keyup', function(e) {
   var allowedKeys = {
     37: 'left',
