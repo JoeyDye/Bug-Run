@@ -1,5 +1,5 @@
 // Open character select modal on load
-$('#myModal').modal('show')
+$('#myModal').modal('show');
 
 // Enemies our player must avoid
 class Enemy {
@@ -46,7 +46,7 @@ class Enemy {
       // Reset enemy if it reaches end of screen
       char.reset();
       char.x += char.speed;
-    }, 75)}
+    }, 75);}
 } // End of Enemy class
 
 class Player {
@@ -143,17 +143,17 @@ class Star {
 const selectGirl = document.querySelector('#girl');
 const selectBoy = document.querySelector('#boy');
 
-const setPlayerGirl = sprite => {
+const setPlayerGirl = () => {
   player.sprite = 'images/char-cat-girl.png';
   $('#myModal').modal('hide');
   Engine(window);
-}
+};
 
-const setPlayerBoy = sprite => {
+const setPlayerBoy = () => {
   player.sprite = 'images/char-boy.png';
   $('#myModal').modal('hide');
   Engine(window);
-}
+};
 
 selectGirl.addEventListener('click', setPlayerGirl);
 selectBoy.addEventListener('click', setPlayerBoy);
@@ -178,7 +178,7 @@ const startEnemies = () => {
 startEnemies();
 
 // Listen for key presses and send the keys to Player.handleInput() method
-document.addEventListener("keyup", function(e) {
+document.addEventListener('keyup', function(e) {
   var allowedKeys = {
     37: 'left',
     38: 'up',

@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <title>Effective Javascript: Bug Run</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h3 class="win-message"></h3>
+  <h3 class="win-message"><span class="win-text"></span></h3>
 
   <!-- Small modal Bootstrap Component -->
-  <div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div id="myModal" class="modal fade bd-example-modal-lg">
     <div  class="modal-dialog modal-sm">
+      <h1 class="modal-title">Bug Run</h1>
       <div class="modal-content">
-        <h2 class="modal-title">Start Game</h2>
-        <p class="modal-sub">Choose Your Character</p>
+        <h2 class="modal-sub">Start Game</h2>
+        <p class="modal-para">Choose Your Character</p>
         <div class="modal-img">
-          <img id="girl" src="images/char-cat-girl.png" alt="Cat girl character">
-          <img id="boy" src="images/char-boy.png" alt="Boy character">
+          <img id="girl" class="char-girl" src="images/char-cat-girl.png" alt="Cat girl character">
+          <img id="boy" class="char-boy" src="images/char-boy.png" alt="Boy character">
         </div>
       </div>
     </div>
@@ -26,6 +27,8 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script src="js/bundle.js"></script>
+  <script src="js/resources.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
