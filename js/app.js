@@ -6,6 +6,19 @@ $('#startModal').modal('show');
 
 
 
+class GameObject {
+  constructor(x, y, sprite, speed) {
+    this.x = x;
+    this.y = y;
+    this.sprite = sprite;
+    this.speed = speed;
+  }
+
+  render() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+}
+
 /**
  * @constructor
  * @description Enemies our player must avoid. Includes properties for x and y coordinates,
@@ -15,13 +28,9 @@ $('#startModal').modal('show');
  * @param { number } x - x coordinate
  * @param { number } y - y coordinate
  */
-class Enemy {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    // Gives each enemy a random speed
-    this.speed = 25 //Math.floor(Math.random() * (250 - 150) + 150);
-    this.sprite = 'images/enemy-bug.png';
+class Enemy extends GameObject{
+  constructor(x, y, sprite = 'images/enemy-bug.png', speed =  Math.floor(Math.random() * (250 - 150) + 150)) {
+    super(x, y, sprite, speed);
   }
 
   /** @description Multiplies any movement by the dt parameter to ensure the game runs at the same
@@ -31,12 +40,7 @@ class Enemy {
   update(dt) {
     this.x = this.x + dt * this.speed;
     this.checkCollisions()
-    this.reset()
-  }
-
-  /** @description Draws enemy on screen */
-  render() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    this.resetEnemy()
   }
 
   /** @description Checks for enemy player collisions and restart player on collision */
@@ -47,7 +51,7 @@ class Enemy {
   }
 
   /** @description resets enemy position if goes of screen */
-  reset() {
+  resetEnemy() {
     if (this.x > 515) {
       this.x = -200;}
   }
@@ -60,23 +64,15 @@ class Enemy {
  * Includes methods such as update, render, reset, win, and handle input on keypress.
  */
 
-class Player {
-  constructor() {
-    this.x = 200;
-    this.y = 380;
-    this.speed = 50;
-    this.sprite;
+class Player extends GameObject {
+  constructor(x = 200, y = 380, sprite, speed = 50) {
+    super(x, y, sprite, speed);
     this.winGame = false;
   }
 
   /** @description Multiplies any movement by the dt parameter to ensure the game runs at the same speed for all computers. */
   update(dt) {
     this.speed * dt;
-  }
-
-  /** @description Loads player on screen */
-  render() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
   /** @description Resets player to start position */
@@ -97,7 +93,6 @@ class Player {
     setTimeout(
       () => {
         this.resetPlayer();
-        startEnemies();
         winMessage.innerHTML = '';
         star.y = -5;
         this.winGame = false;
@@ -144,16 +139,9 @@ class Player {
  * @description Star the player much reach to win. Properties include x coordinate, y coordinate, and
  * sprite image. Methods include render.
  */
-class Star {
-  constructor() {
-    this.x = 205;
-    this.y = -10;
-    this.sprite = 'images/star.png';
-  }
-
-  /** @description Loads star on screen */
-  render() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+class Star extends GameObject {
+  constructor(x = 205, y = -10, sprite = 'images/star.png') {
+    super(x, y, sprite);
   }
 } // End of Star class
 
