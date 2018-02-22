@@ -2,20 +2,20 @@
 
 ## Getting Started
 
-To get started, clone the project to your local computer. Next open index.html from the build folder in your favorite browser. This wills start up the game. Once the game is open, you can begin playing. See gameplay instructions below.
+To get started, clone the project to your local computer. Next open index.html in your favorite browser. This will start up the game. Once the game is open, you can begin playing. See gameplay instructions below.
+
+Note that for improved performance, I've also included a Gulp file you can use to build the application. You will need to run `npm install` to download all dev dependencies. Then, simply run `gulp` in the root directory to set up the build file. Once set up, you can use the new index.html file from you newly created build folder to run the game.
 
 ## Gameplay
 
 Start the game by selecting a player.
 
-To play, use the
+To play, use the following arrow keys to move the player across the screen.
 
 * ↑ up
 * ↓ down
 * → right
 * ← left
-
-arrow keys to move the player across the screen.
 
 ## Winning the Game
 
