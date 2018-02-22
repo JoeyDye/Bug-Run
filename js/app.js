@@ -20,7 +20,7 @@ class Enemy {
     this.x = x;
     this.y = y;
     // Gives each enemy a random speed
-    this.speed = Math.floor(Math.random() * (20 - 10) + 10);
+    this.speed = 25 //Math.floor(Math.random() * (250 - 150) + 150);
     this.sprite = 'images/enemy-bug.png';
   }
 
@@ -29,7 +29,9 @@ class Enemy {
    * @param { number } dt = delta time
    */
   update(dt) {
-    this.speed * dt;
+    this.x = this.x + dt * this.speed;
+    this.checkCollisions()
+    this.reset()
   }
 
   /** @description Draws enemy on screen */
@@ -39,7 +41,7 @@ class Enemy {
 
   /** @description Checks for enemy player collisions and restart player on collision */
   checkCollisions() {
-    if (this.x > (player.x - 65) && this.x < player.x + 80 && this.y >= (player.y - 70) && this.y < player.y + 65) {
+    if (this.x > (player.x - 70) && this.x < player.x + 50 && this.y >= (player.y - 40) && this.y < player.y + 35) {
       player.resetPlayer();
     }
   }
@@ -49,21 +51,6 @@ class Enemy {
     if (this.x > 515) {
       this.x = -200;}
   }
-
-  /** @description Moves enemy across screen, stops enemies if game has been won, and resets the
-   * enemy if it reaches the screen edge.
-   * @param { string } char - enemy instance
-   */
-  moveEnemy(char) {
-    const enemyInterval = setInterval(() => {
-      if (player.winGame === true) {
-        clearInterval(enemyInterval);
-      }
-      char.checkCollisions();
-      char.update();
-      char.reset();
-      char.x += char.speed;
-    }, 100);}
 } // End of Enemy class
 
 /**
@@ -77,7 +64,7 @@ class Player {
   constructor() {
     this.x = 200;
     this.y = 380;
-    this.speed = 35;
+    this.speed = 50;
     this.sprite;
     this.winGame = false;
   }
@@ -125,28 +112,27 @@ class Player {
    * @param { object } keycode - pressed key
    */
   handleInput(keycode) {
-    if (player.winGame === true) return;
+    if (this.winGame === true) return;
 
     if (this.x > (star.x - 70) && this.x < star.x + 60 && this.y >= (star.y - 50) && this.y < star.y + 50) {
       this.win();
     }
-    this.update();
 
     switch (keycode) {
     case 'up':
-      if (this.y > -40) {
+      if (this.y > 0) {
         this.y -= this.speed;}
       break;
     case 'down':
-      if (this.y < canvas.height - 225) {
+      if (this.y < canvas.height - 228) {
         this.y += this.speed;}
       break;
     case 'right':
-      if (this.x < canvas.width - 100) {
+      if (this.x < canvas.width - 105) {
         this.x += this.speed; }
       break;
     case 'left':
-      if (this.x > -10) {
+      if (this.x > 0) {
         this.x -= this.speed;}
     }
   }
@@ -202,12 +188,12 @@ const enemy6 = new Enemy(-500, 220);
 const allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
 /** @description Moves enemies at varying speed accross screen */
-const startEnemies = () => {
-  for (let char of allEnemies) {
-    char.moveEnemy(char);
-  }
-};
-startEnemies();
+// const startEnemies = () => {
+//   for (let char of allEnemies) {
+//     char.moveEnemy(char);
+//   }
+// };
+// startEnemies();
 
 /** @description Listens for key presses and send the keys to Player.handleInput() method */
 document.addEventListener('keyup', function(e) {

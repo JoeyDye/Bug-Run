@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-To get started, clone the project to your local computer and run it on your local host.
+To get started, clone the project to your local computer. Next open index.html from the build folder in your favorite browser. This wills start up the game. Once the game is open, you can begin playing. See gameplay instructions below.
 
 ## Gameplay
 
