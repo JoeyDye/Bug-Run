@@ -5,7 +5,14 @@ $('#startModal').modal({
 $('#startModal').modal('show');
 
 
-
+/**
+ * @constructor
+ * @description Parent class for all game objects. Includes shared properties such as position, sprite, and speed. Also, includes shared render method.
+ * @param { number } x - x-coordinate
+ * @param { number } y - y-coordinate
+ * @param { string } sprite - image file path
+ * @param { number } speed - value to be multiplied by dt
+ */
 class GameObject {
   constructor(x, y, sprite, speed) {
     this.x = x;
@@ -14,6 +21,19 @@ class GameObject {
     this.speed = speed;
   }
 
+  /** @description Multiplies any movement by the dt parameter to ensure the game runs at the same
+   * speed for all computers.
+   * @param { number } dt = delta time
+   */
+  update(dt) {
+    this.x += dt * this.speed;
+    this.checkCollisions();
+    this.resetEnemy();
+  }
+
+
+  /** @description Handles display of game object.
+   */
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
@@ -21,36 +41,22 @@ class GameObject {
 
 /**
  * @constructor
- * @description Enemies our player must avoid. Includes properties for x and y coordinates,
- * speed, and sprite image. Also, includes methods for updating, rendering, checking collisions
- * reseting, and moving the enemy across the screen. Using a constructor allows for the creation
- * of mutiple enemy instances.
- * @param { number } x - x coordinate
- * @param { number } y - y coordinate
+ * @description Enemies our player must avoid. Handles enemy rendering, movement, reseting, and collision checking.
+ * @param Borrows all params from GameObject
  */
 class Enemy extends GameObject{
   constructor(x, y, sprite = 'images/enemy-bug.png', speed =  Math.floor(Math.random() * (250 - 150) + 150)) {
     super(x, y, sprite, speed);
   }
 
-  /** @description Multiplies any movement by the dt parameter to ensure the game runs at the same
-   * speed for all computers.
-   * @param { number } dt = delta time
-   */
-  update(dt) {
-    this.x = this.x + dt * this.speed;
-    this.checkCollisions()
-    this.resetEnemy()
-  }
-
-  /** @description Checks for enemy player collisions and restart player on collision */
+  /** @description Checks for enemy player collisions and restarts player on collision */
   checkCollisions() {
     if (this.x > (player.x - 70) && this.x < player.x + 50 && this.y >= (player.y - 40) && this.y < player.y + 35) {
       player.resetPlayer();
     }
   }
 
-  /** @description resets enemy position if goes of screen */
+  /** @description Resets enemy position if goes of screen */
   resetEnemy() {
     if (this.x > 515) {
       this.x = -200;}
@@ -59,20 +65,14 @@ class Enemy extends GameObject{
 
 /**
  * @constructor
- * @description Player character who much reach the star. Includes properties such as x coordinate,
- * y coordinate, player speed, sprite image (based on player selection), and win status.
- * Includes methods such as update, render, reset, win, and handle input on keypress.
+ * @description Player character. Handles updating, reseting, user input, and win message.
+ * @param Borrows all parameters from Game Object
  */
 
 class Player extends GameObject {
   constructor(x = 200, y = 380, sprite, speed = 50) {
     super(x, y, sprite, speed);
     this.winGame = false;
-  }
-
-  /** @description Multiplies any movement by the dt parameter to ensure the game runs at the same speed for all computers. */
-  update(dt) {
-    this.speed * dt;
   }
 
   /** @description Resets player to start position */
@@ -84,7 +84,7 @@ class Player extends GameObject {
   /** @description Handles game win */
   win() {
     this.winGame = true;
-    const winMessage = document.querySelector('.win-text'); // Display win message
+    const winMessage = document.querySelector('.win-text');
     winMessage.innerHTML = 'You Win!!!';
     // Move star off screen
     star.y = -200;
@@ -136,8 +136,7 @@ class Player extends GameObject {
 
 /**
  * @constructor
- * @description Star the player much reach to win. Properties include x coordinate, y coordinate, and
- * sprite image. Methods include render.
+ * @description Star object
  */
 class Star extends GameObject {
   constructor(x = 205, y = -10, sprite = 'images/star.png') {
@@ -145,26 +144,18 @@ class Star extends GameObject {
   }
 } // End of Star class
 
-/** @description Adds event listener to listen for player selection. Start game once player selected. */
-const selectGirl = document.querySelector('#girl');
-const selectBoy = document.querySelector('#boy');
+/** @description Adds event listener to listen for player selection. Starts game once player selected. */
+const modalIMG = document.querySelector('.modal-img');
 
-const setPlayerGirl = () => {
-  player.sprite = 'images/char-cat-girl.png';
+const setPlayer = (e) => {
+  player.sprite = e.target.id === 'girl' ? 'images/char-cat-girl.png' : 'images/char-boy.png';
   $('#startModal').modal('hide');
   Engine(window);
-};
+}
 
-const setPlayerBoy = () => {
-  player.sprite = 'images/char-boy.png';
-  $('#startModal').modal('hide');
-  Engine(window);
-};
+modalIMG.addEventListener('click', setPlayer);
 
-selectGirl.addEventListener('click', setPlayerGirl);
-selectBoy.addEventListener('click', setPlayerBoy);
-
-/** @description instantiates all enemy, player, and star objects, and place all enemies in array called allEnemies */
+/** @description instantiates all enemy, player, and star objects, and places all enemies in array called allEnemies */
 const player = new Player();
 const star = new Star();
 const enemy1 = new Enemy(-10, 60);
@@ -174,14 +165,6 @@ const enemy4 = new Enemy(-500, 60);
 const enemy5 = new Enemy(-500, 140);
 const enemy6 = new Enemy(-500, 220);
 const allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
-
-/** @description Moves enemies at varying speed accross screen */
-// const startEnemies = () => {
-//   for (let char of allEnemies) {
-//     char.moveEnemy(char);
-//   }
-// };
-// startEnemies();
 
 /** @description Listens for key presses and send the keys to Player.handleInput() method */
 document.addEventListener('keyup', function(e) {
