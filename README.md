@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-To get started, clone the project to your local computer. Next open index.html in your favorite browser. This will start up the game. Once the game is open, you can begin playing. See gameplay instructions below.
+To get started, clone the project to your local computer. Next, open index.html in your favorite browser. This will start up the game. Once the game is open, you can begin playing. See gameplay instructions below.
 
 Note that for improved performance, I've also included a Gulp file you can use to build the application. If haven't already done so, download [node.js](https://nodejs.org/en/).
 
@@ -11,7 +11,7 @@ Next, You will need to run the following in the root directory to download all d
 ```bash
 npm install
 ```
-Then, simply run the gulp command in the root directory to set up the build.
+Then, simply run the gulp command in the root directory to start the build.
 
 ```bash
 gulp
