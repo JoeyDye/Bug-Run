@@ -7,7 +7,7 @@ $('#startModal').modal('show');
 
 /**
  * @constructor
- * @description Parent class for all game objects. Includes shared properties such as position, sprite, and speed. Also, includes shared render method.
+ * @description Parent class for all game objects. Allows for the sharing of repeated properties and methods.
  * @param { number } x - x-coordinate
  * @param { number } y - y-coordinate
  * @param { string } sprite - image file path
@@ -70,7 +70,7 @@ class Enemy extends GameObject{
  */
 
 class Player extends GameObject {
-  constructor(x = 200, y = 380, sprite, speed = 50) {
+  constructor(x, y, speed, sprite) {
     super(x, y, sprite, speed);
     this.winGame = false;
   }
@@ -151,12 +151,12 @@ const setPlayer = (e) => {
   player.sprite = e.target.id === 'girl' ? 'images/char-cat-girl.png' : 'images/char-boy.png';
   $('#startModal').modal('hide');
   Engine(window);
-}
+};
 
 modalIMG.addEventListener('click', setPlayer);
 
 /** @description instantiates all enemy, player, and star objects, and places all enemies in array called allEnemies */
-const player = new Player();
+const player = new Player(200, 380, 50);
 const star = new Star();
 const enemy1 = new Enemy(-10, 60);
 const enemy2 = new Enemy(-10, 140);
@@ -166,7 +166,7 @@ const enemy5 = new Enemy(-500, 140);
 const enemy6 = new Enemy(-500, 220);
 const allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
-/** @description Listens for key presses and send the keys to Player.handleInput() method */
+/** @description Listens for key presses and sends the keys to Player.handleInput() method */
 document.addEventListener('keyup', function(e) {
   var allowedKeys = {
     37: 'left',

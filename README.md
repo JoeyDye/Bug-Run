@@ -11,12 +11,12 @@ Next, You will need to run the following in the root directory to download all d
 ```bash
 npm install
 ```
-Then, simply run the gulp command in the root directory to set up the build folder.
+Then, simply run the gulp command in the root directory to set up the build.
 
 ```bash
 gulp
 ```
-Once set up, you can use the new index.html file from you newly created build folder to run the game.
+Lastly, you will need to add bundle.js and style.min.css to your build index.html file, and open the index.html file in your favorite browser to run the game.
 
 ## Gameplay
 
