@@ -1,9 +1,9 @@
 /** @description Opens character select modal on load */
 $('#startModal').modal({
-  backdrop: 'static', keyboard: false
+  backdrop: 'static',
+  keyboard: false
 });
 $('#startModal').modal('show');
-
 
 /**
  * @constructor
@@ -31,7 +31,6 @@ class GameObject {
     this.resetEnemy();
   }
 
-
   /** @description Handles display of game object.
    */
   render() {
@@ -44,14 +43,24 @@ class GameObject {
  * @description Enemies our player must avoid. Handles enemy rendering, movement, reseting, and collision checking.
  * @param Borrows all params from GameObject
  */
-class Enemy extends GameObject{
-  constructor(x, y, sprite = 'images/enemy-bug.png', speed =  Math.floor(Math.random() * (250 - 150) + 150)) {
+class Enemy extends GameObject {
+  constructor(
+    x,
+    y,
+    sprite = 'images/enemy-bug.png',
+    speed = Math.floor(Math.random() * (250 - 150) + 150)
+  ) {
     super(x, y, sprite, speed);
   }
 
   /** @description Checks for enemy player collisions and restarts player on collision */
   checkCollisions() {
-    if (this.x > (player.x - 70) && this.x < player.x + 50 && this.y >= (player.y - 40) && this.y < player.y + 35) {
+    if (
+      this.x > player.x - 70 &&
+      this.x < player.x + 50 &&
+      this.y >= player.y - 40 &&
+      this.y < player.y + 35
+    ) {
       player.resetPlayer();
     }
   }
@@ -59,7 +68,8 @@ class Enemy extends GameObject{
   /** @description Resets enemy position if goes of screen */
   resetEnemy() {
     if (this.x > 515) {
-      this.x = -200;}
+      this.x = -200;
+    }
   }
 } // End of Enemy class
 
@@ -90,13 +100,12 @@ class Player extends GameObject {
     star.y = -200;
 
     /** @description Resets game after 3 seconds */
-    setTimeout(
-      () => {
-        this.resetPlayer();
-        winMessage.innerHTML = '';
-        star.y = -5;
-        this.winGame = false;
-      }, 3000);
+    setTimeout(() => {
+      this.resetPlayer();
+      winMessage.innerHTML = '';
+      star.y = -5;
+      this.winGame = false;
+    }, 3000);
   }
 
   /** @description Enables player movement on keypress
@@ -109,30 +118,38 @@ class Player extends GameObject {
   handleInput(keycode) {
     if (this.winGame === true) return;
 
-    if (this.x > (star.x - 70) && this.x < star.x + 60 && this.y >= (star.y - 50) && this.y < star.y + 50) {
+    if (
+      this.x > star.x - 70 &&
+      this.x < star.x + 60 &&
+      this.y >= star.y - 50 &&
+      this.y < star.y + 50
+    ) {
       this.win();
     }
 
     switch (keycode) {
     case 'up':
       if (this.y > 0) {
-        this.y -= this.speed;}
+        this.y -= this.speed;
+      }
       break;
     case 'down':
       if (this.y < canvas.height - 228) {
-        this.y += this.speed;}
+        this.y += this.speed;
+      }
       break;
     case 'right':
       if (this.x < canvas.width - 105) {
-        this.x += this.speed; }
+        this.x += this.speed;
+      }
       break;
     case 'left':
       if (this.x > 0) {
-        this.x -= this.speed;}
+        this.x -= this.speed;
+      }
     }
   }
 } // End of Player class
-
 
 /**
  * @constructor
@@ -147,8 +164,9 @@ class Star extends GameObject {
 /** @description Adds event listener to listen for player selection. Starts game once player selected. */
 const modalIMG = document.querySelector('.modal-img');
 
-const setPlayer = (e) => {
-  player.sprite = e.target.id === 'girl' ? 'images/char-cat-girl.png' : 'images/char-boy.png';
+const setPlayer = e => {
+  player.sprite =
+    e.target.id === 'girl' ? 'images/char-cat-girl.png' : 'images/char-boy.png';
   $('#startModal').modal('hide');
   Engine(window);
 };
