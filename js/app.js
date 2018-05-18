@@ -156,7 +156,7 @@ class Player extends GameObject {
  * @description Star object
  */
 class Star extends GameObject {
-  constructor(x = 205, y = -10, sprite = 'images/Star.png') {
+  constructor(x = 205, y = -10, sprite = 'images/star.png') {
     super(x, y, sprite);
   }
 } // End of Star class
